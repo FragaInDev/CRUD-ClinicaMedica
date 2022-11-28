@@ -74,7 +74,7 @@ public class PacienteController implements IPacienteController {
         tfCpf.setText(p.getCpf());
         tfNomePaciente.setText(p.getNome());
         tfLogradouroPaciente.setText(p.getLogradouro());
-        tfNumPaciente.setText(String.valueOf(p.getNumero()));
+        tfNumPaciente.setText(p.getNumero());
         tfCepPaciente.setText(p.getCep());
         tfComplePaciente.setText(p.getComplemento());
         tfTelPaciente.setText(p.getTelefone());
@@ -91,10 +91,10 @@ public class PacienteController implements IPacienteController {
         PacienteDAO pDao = new PacienteDAO();
         List<Paciente> listaPacientes = pDao.listaPaciente();
 
-        StringBuffer buffer = new StringBuffer("\t CPF\tNome\tLogradouro\tnumero\tCEP\tComplemento\ttipo Sanguineo\temail");
+        StringBuffer buffer = new StringBuffer("CPF\t\tNome\t\tLogradouro\t\tnumero\t\tCEP\t\tComplemento\t\ttipo Sanguineo\t\temail\n");
 
         for(Paciente p : listaPacientes){
-            buffer.append(p.getCpf()+"\t"+p.getNome()+"\t"+p.getLogradouro()+"\t"+p.getNumero()+"\t"+p.getCep()+"\t"+p.getComplemento()+"\t"+p.getTipoSanguineo()+"\t"+p.getEmail());
+            buffer.append(p.getCpf()+"\t\t"+p.getNome()+"\t\t"+p.getLogradouro()+"\t\t"+p.getNumero()+"\t\t"+p.getCep()+"\t\t"+p.getComplemento()+"\t\t"+p.getTipoSanguineo()+"\t\t"+p.getEmail()+"\n");
         }
 
         taListarPaciente.setText(buffer.toString());

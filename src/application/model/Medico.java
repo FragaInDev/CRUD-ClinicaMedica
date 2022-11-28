@@ -4,7 +4,7 @@ public class Medico {
     private String nome;
     private String crm;
     private String logradouro;
-    private int numEnd;
+    private String numEnd;
     private String cep;
     private String complemento;
     private String telefone;
@@ -29,10 +29,10 @@ public class Medico {
     public void setLogradouro(String logradouro) {
         this.logradouro = logradouro;
     }
-    public int getNumEnd() {
+    public String getNumEnd() {
         return numEnd;
     }
-    public void setNumEnd(int numEnd) {
+    public void setNumEnd(String numEnd) {
         this.numEnd = numEnd;
     }
     public String getCep() {

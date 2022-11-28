@@ -19,12 +19,12 @@ public class ClinicaDAO implements IClinicaDAO {
 
 	@Override
 	public void insereClinica(Clinica c) throws SQLException {
-		String sql = "INSERT INTO clinica VALUES (?, ?, ?)";
+		String sql = "INSERT INTO clinica VALUES (?,?,?,?,?,?,?,?)";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setString(1, c.getNome());
-		ps.setInt(2, c.getId());
+		ps.setInt(1, c.getId());
+		ps.setString(2, c.getNome());
 		ps.setString(3, c.getLogradouro());
-		ps.setInt(4, c.getNumEnd());
+		ps.setString(4, c.getNumEnd());
 		ps.setString(5, c.getCep());
 		ps.setString(6, c.getComplemento());
 		ps.setString(7, c.getTelefone());
@@ -36,12 +36,12 @@ public class ClinicaDAO implements IClinicaDAO {
 
 	@Override
 	public void atualizaClinica(Clinica c) throws SQLException {
-		String sql = "UPDATE clinica SET nome = ?, logradouro = ?, numEnd = ?, cep = ?, complemento = ?, telefone = ?, email = ? WHERE id = ?";
+		String sql = "UPDATE clinica SET nome= ?, logradouro= ?, numero= ?, cep= ?, complemento= ?, telefone= ?, email= ? WHERE id= ?";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setString(1, c.getNome());
-		ps.setInt(2, c.getId());
+		ps.setInt(1, c.getId());
+		ps.setString(2, c.getNome());
 		ps.setString(3, c.getLogradouro());
-		ps.setInt(4, c.getNumEnd());
+		ps.setString(4, c.getNumEnd());
 		ps.setString(5, c.getCep());
 		ps.setString(6, c.getComplemento());
 		ps.setString(7, c.getTelefone());
@@ -53,7 +53,7 @@ public class ClinicaDAO implements IClinicaDAO {
 
 	@Override
 	public void excluiClinica(Clinica c) throws SQLException {
-		String sql = "DELETE clinica WHERE id = ?";
+		String sql = "DELETE clinica WHERE id= ?";
 		
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, c.getId());
@@ -64,7 +64,7 @@ public class ClinicaDAO implements IClinicaDAO {
 
 	@Override
 	public Clinica consultaClinica(Clinica c) throws SQLException {
-		String sql = "SELECT nome, logradouro, numEnd, cep, complemento, telefone, email FROM clinica WHERE id = ?";
+		String sql = "SELECT id, nome, logradouro, numero, cep, complemento, telefone, email FROM clinica WHERE id= ?";
 		
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, c.getId());
@@ -75,7 +75,7 @@ public class ClinicaDAO implements IClinicaDAO {
 		if (rs.next()) {
 			c.setNome(rs.getString("nome"));
 			c.setLogradouro(rs.getString("logradouro"));
-			c.setNumEnd(rs.getInt("numEnd"));
+			c.setNumEnd(rs.getString("numero"));
 			c.setComplemento(rs.getString("complemento"));
 			c.setCep(rs.getString("cep"));
 			c.setTelefone(rs.getString("telefone"));
@@ -94,7 +94,7 @@ public class ClinicaDAO implements IClinicaDAO {
 
 	@Override
 	public List<Clinica> listaClinica() throws SQLException {
-		String sql = "SELECT nome, logradouro, numEnd, cep, complemento, telefone, email FROM clinica";
+		String sql = "SELECT id, nome, logradouro, numero, cep, complemento, telefone, email FROM clinica";
 		
 		PreparedStatement ps = con.prepareStatement(sql);
 		
@@ -107,7 +107,7 @@ public class ClinicaDAO implements IClinicaDAO {
 			c.setId(rs.getInt("id"));
 			c.setNome(rs.getString("nome"));
 			c.setLogradouro(rs.getString("logradouro"));
-			c.setNumEnd(rs.getInt("numEnd"));
+			c.setNumEnd(rs.getString("numero"));
 			c.setComplemento(rs.getString("complemento"));
 			c.setCep(rs.getString("cep"));
 			c.setTelefone(rs.getString("telefone"));

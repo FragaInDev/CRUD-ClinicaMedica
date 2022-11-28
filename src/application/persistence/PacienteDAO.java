@@ -25,7 +25,7 @@ public class PacienteDAO implements IPacienteDAO {
         ps.setString(1, p.getCpf());
         ps.setString(2, p.getNome());
         ps.setString(3, p.getLogradouro());
-        ps.setInt(4, p.getNumero());
+        ps.setString(4, p.getNumero());
         ps.setString(5, p.getCep());
         ps.setString(6, p.getComplemento());
         ps.setString(7, p.getTelefone());
@@ -43,15 +43,15 @@ public class PacienteDAO implements IPacienteDAO {
         String sql = "UPDATE paciente set nome = ?, logradouro = ?, numero = ?, cep = ?, complemento = ?, telefone = ?, tipoSanguineo = ?, email = ? WHERE cpf = ?";
         PreparedStatement ps = c.prepareStatement(sql);
         
-        ps.setString(2, p.getNome());
-        ps.setString(3, p.getLogradouro());
-        ps.setInt(4, p.getNumero());
-        ps.setString(5, p.getCep());
-        ps.setString(6, p.getComplemento());
-        ps.setString(7, p.getTelefone());
-        ps.setString(8, p.getTipoSanguineo());
-        ps.setString(9, p.getEmail());
-        ps.setString(1, p.getCpf());
+        ps.setString(1, p.getNome());
+        ps.setString(2, p.getLogradouro());
+        ps.setString(3, p.getNumero());
+        ps.setString(4, p.getCep());
+        ps.setString(5, p.getComplemento());
+        ps.setString(6, p.getTelefone());
+        ps.setString(7, p.getTipoSanguineo());
+        ps.setString(8, p.getEmail());
+        ps.setString(9, p.getCpf());
 
         ps.execute();
         ps.close();
@@ -70,7 +70,7 @@ public class PacienteDAO implements IPacienteDAO {
 
     @Override
     public Paciente consultaPaciente(Paciente p) throws SQLException {
-        String sql = "SELECT cpf, nome, logradouro, numero, cep, complemento, telefone, tipoSaguineo, email FROM paciente WHERE cpf = ?";
+        String sql = "SELECT cpf, nome, logradouro, numero, cep, complemento, telefone, tipoSanguineo, email FROM paciente WHERE cpf = ?";
         PreparedStatement ps = c.prepareStatement(sql);
         ps.setString(1, p.getCpf());
 
@@ -80,7 +80,7 @@ public class PacienteDAO implements IPacienteDAO {
         if(rs.next()){
             p.setNome(rs.getString("nome"));
             p.setLogradouro(rs.getString("logradouro"));
-            p.setNumero(rs.getInt("numero"));
+            p.setNumero(rs.getString("numero"));
             p.setCep(rs.getString("cep"));
             p.setComplemento(rs.getString("complemento"));
             p.setTelefone(rs.getString("telefone"));
@@ -104,7 +104,7 @@ public class PacienteDAO implements IPacienteDAO {
 
     @Override
     public List<Paciente> listaPaciente() throws SQLException {
-        String sql = "SELECT cpf, nome, logradouro, numero, cep, complemento, telefone, tipoSaguineo, email FROM paciente";
+        String sql = "SELECT cpf, nome, logradouro, numero, cep, complemento, telefone, tipoSanguineo, email FROM paciente";
 
         PreparedStatement ps = c.prepareStatement(sql);
        
@@ -117,7 +117,7 @@ public class PacienteDAO implements IPacienteDAO {
             p.setCpf(rs.getString("cpf"));
             p.setNome(rs.getString("nome"));
             p.setLogradouro(rs.getString("logradouro"));
-            p.setNumero(rs.getInt("numero"));
+            p.setNumero(rs.getString("numero"));
             p.setCep(rs.getString("cep"));
             p.setComplemento(rs.getString("complemento"));
             p.setTelefone(rs.getString("telefone"));

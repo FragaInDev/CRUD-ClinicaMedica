@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 
 import application.model.Clinica;
 import application.model.Consulta;
+import application.model.Especialidade;
 import application.model.Medico;
 import application.model.Paciente;
 import javafx.event.ActionEvent;
@@ -238,7 +239,6 @@ public class AppController {
     @FXML
     void acaoClinica(ActionEvent event) {
         String cmd = event.getSource().toString();
-    	System.out.println(cmd);
     	
     	ClinicaController clinicaController = 
     			new ClinicaController(tfIdClinica, tfNomeClinica, tfTelClinica, tfEmailClinica, tfLogradouroClinica, 
@@ -248,13 +248,12 @@ public class AppController {
     				(tfIdClinica.getText().isEmpty() 
     				|| tfNomeClinica.getText().isEmpty() || tfTelClinica.getText().isEmpty() 
     				|| tfEmailClinica.getText().isEmpty() || tfLogradouroClinica.getText().isEmpty() 
-    				|| tfCepClinica.getText().isEmpty() || tfComplClinica.getText().isEmpty() 
+    				|| tfCepClinica.getText().isEmpty()
     				|| tfNumClinica.getText().isEmpty())) {
     		JOptionPane.showMessageDialog(null, "Preencha os campos", "Erro", JOptionPane.ERROR_MESSAGE);
     	} else {
-    		if ((cmd.contains("Excluir") || cmd.contains("Buscar") || cmd.contains("tfIdClinica") 
-    				&& tfIdClinica.getText().isEmpty())) {
-    		JOptionPane.showMessageDialog(null, "Preencha o cÃ³digo", "Erro", JOptionPane.ERROR_MESSAGE);
+    		if ((cmd.contains("Excluir") || cmd.contains("Buscar") || cmd.contains("tfIdClinica")) && tfIdClinica.getText().isEmpty()) {
+    		JOptionPane.showMessageDialog(null, "Preencha o código", "Erro", JOptionPane.ERROR_MESSAGE);
     	} else {
     		try {
     			if (cmd.contains("Listar")) {
@@ -262,11 +261,11 @@ public class AppController {
     			} else {
     				Clinica c = new Clinica();
     				c.setId(Integer.parseInt(tfIdClinica.getText()));
-    				c.setNumEnd(Integer.parseInt(tfNumClinica.getText()));
     				c.setNome(tfNomeClinica.getText());
     				c.setTelefone(tfTelClinica.getText());
     				c.setEmail(tfEmailClinica.getText());
     				c.setLogradouro(tfLogradouroClinica.getText());
+                    c.setNumEnd(tfNumClinica.getText());
     				c.setCep(tfCepClinica.getText());
     				c.setComplemento(tfComplClinica.getText());
 
@@ -291,80 +290,45 @@ public class AppController {
 
     @FXML
     void acaoConsulta(ActionEvent event) {
-        ConsultaController consultaController =
-				new ConsultaController(tfIdConsulta, tfPacienteConsulta, tfMedicoConsulta, 
-						tfClinicaConsulta, tfDataConsulta, tfHoraConsulta, 
-						tfObserConsulta, taListaConsulta);
-		
-		String cmd = event.getSource().toString();
-		System.out.println(cmd);
-		
-		if((cmd.contains("Adicionar") || cmd.contains("Atualizar")) && 
-				(tfIdConsulta.getText().isEmpty()
-				|| tfPacienteConsulta.getText().isEmpty()
-				|| tfMedicoConsulta.getText().isEmpty()
-				|| tfClinicaConsulta.getText().isEmpty()
-				|| tfDataConsulta.getText().isEmpty()
-				|| tfHoraConsulta.getText().isEmpty()
-				|| tfObserConsulta.getText().isEmpty())) {
-			JOptionPane.showMessageDialog(null, "Preencha os campos", "ERRO", JOptionPane.ERROR_MESSAGE);
-		} else {
-			if ((cmd.contains("Excluir") || cmd.contains("Buscar") || cmd.contains("txtCpfPacienteConsulta") 
-					|| cmd.contains("txtCrmMedicoConsulta")|| cmd.contains("txtCrmMedicoConsulta")
-					|| cmd.contains("txtIdClinicaConsulta")
-					&& tfIdConsulta.getText().isEmpty())){
-				JOptionPane.showMessageDialog(null, "Preencha o Id", "ERRO", JOptionPane.ERROR_MESSAGE);	
-			}
-			else {
-				try {
-					if (cmd.contains("Listar")) {
-						consultaController.buscarConsultas();
-					} else {
-						Consulta co = new Consulta();
-						co.setId(Integer.parseInt(tfIdConsulta.getText()));
-						co.setData((null));
-						co.setHora(null);
-						co.setObservacao(tfObserConsulta.getText());
-
-						if(!tfPacienteConsulta.getText().isEmpty()){
-							Paciente pa = new Paciente();
-							pa.setCpf((tfPacienteConsulta.getText()));
-							co.setPacienteCpf(pa);;
-						}
-
-						if(!tfMedicoConsulta.getText().isEmpty()){
-							Medico me = new Medico();
-							me.setCrm(tfMedicoConsulta.getText());
-							//co.setMedico(me);
-							
-							if (!tfClinicaConsulta.getText().isEmpty()) {
-								Clinica cl = new Clinica();
-								cl.setId(Integer.parseInt(tfClinicaConsulta.getText()));
-							}
-
-						if (cmd.contains("Adicionar")) {
-							consultaController.adicionarConsulta(co);
-						} else if (cmd.contains("Atualizar")) {
-							consultaController.atualizarConsulta(co);
-						} else if (cmd.contains("Excluir")) {
-							consultaController.excluirConsulta(co);
-						} else if (cmd.contains("Buscar") || cmd.contains("txtIdConsulta")) {
-							consultaController.buscarConsulta(co);
-						}
-					}
-					}
-					
-				} catch (ClassNotFoundException | SQLException e) {
-					JOptionPane.showMessageDialog(null, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
-					e.printStackTrace();
-				}
-			}
-		}
+        
     }
 
     @FXML
     void acaoEspecialidade(ActionEvent event) {
+        String cmd = event.getSource().toString();
 
+        EspecialidadeController eCon = new EspecialidadeController(tfIdEspecialidade, tfEspecialidade, taListaEspecialidade);
+
+        if ((cmd.contains("Inserir") || cmd.contains("Alterar")) && tfIdEspecialidade.getText().isEmpty() && tfEspecialidade.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Preencha os campos", "ERRO", JOptionPane.ERROR_MESSAGE);
+        } else {
+            if ((cmd.contains("Excluir") || cmd.contains("Buscar")) && tfIdEspecialidade.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Preencha o ID", "ERRO", JOptionPane.ERROR_MESSAGE);
+            } else {
+                try {
+                    if (cmd.contains("Listar")){
+                        eCon.buscarEspecialidades();
+                    }else {
+                        Especialidade e = new Especialidade();
+                        e.setId(Integer.parseInt(tfIdEspecialidade.getText()));
+                        e.setNomeEspecialidade(tfEspecialidade.getText());
+
+                        if (cmd.contains("Inserir")) {
+                            eCon.inserirEspecialidade(e);
+                        } else if (cmd.contains("Alterar")) {
+                            eCon.atualizarEspecialidade(e);
+                        } else if (cmd.contains("Excluir")) {
+                            eCon.excluirEspecialidade(e);
+                        } else if (cmd.contains("Buscar")) {
+                            eCon.buscarEspecialidade(e);
+                        }
+                    }
+                } catch (ClassNotFoundException | SQLException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     @FXML
@@ -385,7 +349,6 @@ public class AppController {
             || tfLogradouroPaciente.getText().isEmpty()
             || tfNumPaciente.getText().isEmpty()
             || tfCepPaciente.getText().isEmpty()
-            || tfComplePaciente.getText().isEmpty()
             || tfTelPaciente.getText().isEmpty()
             || tfSanguePaciente.getText().isEmpty()
             || tfEmailPaciente.getText().isEmpty())){
@@ -403,7 +366,7 @@ public class AppController {
                         p.setCpf(tfCpf.getText());
                         p.setNome(tfNomePaciente.getText());
                         p.setLogradouro(tfLogradouroPaciente.getText());
-                        p.setNumero(Integer.parseInt(tfNumPaciente.getText()));
+                        p.setNumero(tfNumPaciente.getText());
                         p.setCep(tfCepPaciente.getText());
                         p.setComplemento(tfComplePaciente.getText());
                         p.setTelefone(tfTelPaciente.getText());

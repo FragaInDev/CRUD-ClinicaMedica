@@ -5,7 +5,7 @@ public class Paciente {
     private String cpf;
     private String logradouro;
     private String cep;
-    private int numEnd;
+    private String numEnd;
     private String complemento;
     private String telefone;
     private String email;
@@ -35,10 +35,10 @@ public class Paciente {
     public void setCep(String cep) {
         this.cep = cep;
     }
-    public int getNumero() {
+    public String getNumero() {
         return numEnd;
     }
-    public void setNumero(int numEnd) {
+    public void setNumero(String numEnd) {
         this.numEnd = numEnd;
     }
     public String getComplemento() {

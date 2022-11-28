@@ -37,6 +37,17 @@ public class ClinicaController implements IClinicaController {
 		this.taListaClinica = taListaClinica;
 	}
 
+	private void limpaCamposClinica() {
+		tfIdClinica.setText("");
+		tfNomeClinica.setText("");
+		tfTelClinica.setText("");
+		tfEmailClinica.setText("");
+		tfLogradouroClinica.setText("");
+		tfCepClinica.setText("");
+		tfComplClinica.setText("");
+		tfNumClinica.setText("");
+	}
+
 	@Override
 	public void insereClinica(Clinica c) throws ClassNotFoundException, SQLException {
 		ClinicaDAO cDAO = new ClinicaDAO();
@@ -68,14 +79,14 @@ public class ClinicaController implements IClinicaController {
 		ClinicaDAO cDAO = new ClinicaDAO();
 		c = cDAO.consultaClinica(c);
 
-		tfIdClinica.setText(String.valueOf(c.getId()));
+		tfIdClinica.setText(Integer.toString(c.getId()));
 		tfNomeClinica.setText(c.getNome());
 		tfTelClinica.setText(c.getTelefone());
 		tfEmailClinica.setText(c.getEmail());
 		tfLogradouroClinica.setText(c.getLogradouro());
 		tfCepClinica.setText(c.getCep());
 		tfComplClinica.setText(c.getComplemento());
-		tfNumClinica.setText(String.valueOf(c.getNumEnd()));
+		tfNumClinica.setText(c.getNumEnd());
 	}
 
 	@Override
@@ -85,24 +96,15 @@ public class ClinicaController implements IClinicaController {
 		ClinicaDAO cDAO = new ClinicaDAO();
 		List<Clinica> listaClinica = cDAO.listaClinica();
 		
-		StringBuffer buffer = new StringBuffer("Id\t\t\t\tNome\t\t\t\tTelefone\t\t\t\tEmail\t\t\t\tLogradouro\t\t\t\tCep\t\t\t\tComplemento\t\t\t\tNumero\n");
+		StringBuffer buffer = new StringBuffer("Id\t\t\t\tNome\t\t\t\tLogradouro\t\t\t\tNumero\t\t\t\tCEP\t\t\t\tComplemento\t\t\t\tTelefone\t\t\t\tEmail\n");
 		
 		for (Clinica c : listaClinica) {
-			buffer.append(c.getId()+"\t\t\t\t"+c.getNome()+"\t\t\t\t"+c.getTelefone()+"\t\t\t\t"+c.getEmail()+"\t\t\t\t"+c.getLogradouro()+"\t\t\t\t"+c.getNumEnd()+"\t\t\t\t"+c.getComplemento()+"\t\t\t\t"+c.getCep()+"\n");
+			buffer.append(c.getId()+"\t\t\t\t"+c.getNome()+"\t\t\t\t"+c.getLogradouro()+"\t\t\t\t"+c.getNumEnd()+"\t\t\t\t"+c.getCep()+"\t\t\t\t"+c.getComplemento()+"\t\t\t\t"+c.getTelefone()+"\t\t\t\t"+c.getEmail()+"\n");
 			taListaClinica.setText(buffer.toString());
 		}
 	}
 	
-	private void limpaCamposClinica() {
-		tfIdClinica.setText("");
-		tfNomeClinica.setText("");
-		tfTelClinica.setText("");
-		tfEmailClinica.setText("");
-		tfLogradouroClinica.setText("");
-		tfCepClinica.setText("");
-		tfComplClinica.setText("");
-		tfNumClinica.setText("");
-	}
+	
 
 	
 }
