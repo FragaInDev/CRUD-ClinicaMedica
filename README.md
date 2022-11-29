@@ -1,18 +1,22 @@
-## Getting Started
+## Trabalho Semestral de Banco de Dados
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+O objetivo era fazer um CRUD que tenha 5 entidades, e fazer a ligação do `JAVA` com  o `SQL Server`.
 
-## Folder Structure
 
-The workspace contains two folders by default, where:
+## Integrantes do Grupo
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+- Ana Beatriz Sotto;
+- Bruno Fraga `EU`;
+- Francielle Cardoso;
+- Gustavo Rodrigues;
+- Vitor Kenji.
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+## Documentação do Projeto
 
-## Dependency Management
+A documentação do projeto pode ser encontrada [AQUI](https://docs.google.com/document/d/1RAERqNWdmS0jgfw3lEa1QpkeZiuAfzc-gwggnaNH9D8/edit#heading=h.y2z4isbt591h).
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+
+## Observações
+
+Tivemos dificuldade para conseguir resolver o bug do "Buscar" e "Excluir", da tela de consulta e receituario.
