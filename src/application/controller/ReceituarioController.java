@@ -68,7 +68,7 @@ public class ReceituarioController implements IReceituarioController {
 
 		StringBuffer sb = new StringBuffer("Id\t\t\t\tConsulta\t\t\t\tPrescrição\n");
 		for (Receituario re : listaReceituarios) {
-			sb.append(re.getId() + "\t\t\t\t" + re.getConsultaId() + "\t\t\t\t" + re.getPrescricao() + "\n");
+			sb.append(re.getId() + "\t\t\t\t" + re.getConsultaId().getId() + "\t\t\t\t" + re.getPrescricao() + "\n");
 		}
 		taListarReceituarios.setText(sb.toString());
 	}

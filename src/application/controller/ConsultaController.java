@@ -84,7 +84,7 @@ public class ConsultaController implements IConsultaController {
 				"Id\t\t\t\tPaciente\t\t\t\tMédico\t\t\t\tClínica\t\t\t\tData\t\t\t\tHora\t\t\t\tObservação\n");
 		for (Consulta co : listaConsultas) {
 			sb.append(co.getId() + "\t\t\t\t" + co.getPacienteCpf().getCpf() + "\t\t\t" + co.getMedicoCrm().getCrm() + "\t\t\t\t"
-					+ co.getClinicaId().getId() + "\t\t\t\t\t" + co.getData() + "\t\t" + co.getHora() + "\t\t\t\t"
+					+ co.getClinicaId().getId() + "\t\t\t\t\t" + co.getData() + "\t\t" + co.getHora() + "\t\t\t"
 					+ co.getObservacao() + "\n");
 		}
 		taListaConsulta.setText(sb.toString());

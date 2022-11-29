@@ -239,10 +239,15 @@ public class AppController {
     private Label lblEspecialidade;
 
     @FXML
+    private TextArea taListarReceituarios;
+
+    @FXML
     private TextField tfIdEspecialidadeMedico;
 
     @FXML
     private TextField tfTelPaciente;
+
+    
 
     @FXML
     void acaoClinica(ActionEvent event) {
@@ -469,7 +474,7 @@ public class AppController {
 
         PacienteController pCon = new PacienteController(tfCpf, tfNomePaciente, tfLogradouroPaciente, tfNumPaciente, tfCepPaciente, tfComplePaciente, tfTelPaciente, tfSanguePaciente, tfEmailPaciente, taListarPaciente);
 
-        if((cmd.contains("inserir") || cmd.contains("atualizar")) && 
+        if((cmd.contains("inserir") || cmd.contains("alterar")) && 
         (tfCpf.getText().isEmpty()
             || tfNomePaciente.getText().isEmpty()
             || tfLogradouroPaciente.getText().isEmpty()
@@ -500,7 +505,7 @@ public class AppController {
                         p.setEmail(tfEmailPaciente.getText());
                         if (cmd.contains("Inserir")){
                             pCon.inserirPaciente(p);
-                        } else if (cmd.contains("Atualizar")){
+                        } else if (cmd.contains("Alterar")){
                             pCon.atualizarPaciente(p);
                         } else if (cmd.contains("Excluir")){
                             pCon.excluirPaciente(p);
@@ -518,12 +523,12 @@ public class AppController {
 
     @FXML
     void acaoReceituario(ActionEvent event) {
-        ReceituarioController receituarioController = new ReceituarioController(tfIdReceituario, tfIdConsultaReceituario, tfPrescricao, taListaClinica);
+        ReceituarioController receituarioController = new ReceituarioController(tfIdReceituario, tfIdConsultaReceituario, tfPrescricao, taListarReceituarios);
 		
 		String cmd = event.getSource().toString();
 		System.out.println(cmd);
 		
-		if((cmd.contains("Adicionar") || cmd.contains("Atualizar")) && 
+		if((cmd.contains("Inserir") || cmd.contains("Atualizar")) && 
 				(tfIdReceituario.getText().isEmpty()
 				|| tfIdConsultaReceituario.getText().isEmpty()
 				|| tfPrescricao.getText().isEmpty())) {
@@ -547,7 +552,7 @@ public class AppController {
 							co.setId(Integer.parseInt(tfIdConsultaReceituario.getText()));
 							re.setConsultaId(co);
 						}
-						if (cmd.contains("Adicionar")) {
+						if (cmd.contains("Inserir")) {
 							receituarioController.adicionarReceituario(re);
 						} else if (cmd.contains("Atualizar")) {
 							receituarioController.atualizarReceituario(re);

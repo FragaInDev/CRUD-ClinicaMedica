@@ -21,7 +21,7 @@ public class ReceituarioDAO implements IReceituarioDAO {
 
 	@Override
 	public void adicionaReceituario(Receituario re) throws SQLException {
-		String sql = "INSERT INTO receita VALUES (?,?,?)";
+		String sql = "INSERT INTO receituario VALUES (?,?,?)";
 
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setInt(1, re.getId());
@@ -33,7 +33,7 @@ public class ReceituarioDAO implements IReceituarioDAO {
 
 	@Override
 	public void atualizaReceituario(Receituario re) throws SQLException {
-		String sql = "UPDATE receita SET consultaID = ?, prescricao = ? WHERE id = ?";
+		String sql = "UPDATE receituario SET consultaID = ?, prescricao = ? WHERE id = ?";
 
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setInt(1, re.getConsultaId().getId());
@@ -45,7 +45,7 @@ public class ReceituarioDAO implements IReceituarioDAO {
 
 	@Override
 	public void excluiReceituario(Receituario re) throws SQLException {
-		String sql = "DELETE receita WHERE id = ?";
+		String sql = "DELETE receituario WHERE id = ?";
 
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setInt(1, re.getId());
