@@ -14,7 +14,7 @@ O objetivo era fazer um CRUD que tenha 5 entidades, e fazer a ligação do `JAVA
 
 ## Documentação do Projeto e Query SQL
 
-- A documentação do projeto pode ser encontrada [AQUI](https://docs.google.com/document/d/1RAERqNWdmS0jgfw3lEa1QpkeZiuAfzc-gwggnaNH9D8/edit#heading=h.y2z4isbt591h).
+- A documentação do projeto pode ser encontrada [AQUI](https://docs.google.com/document/d/1RAERqNWdmS0jgfw3lEa1QpkeZiuAfzc-gwggnaNH9D8/edit#).
 - A QuerySQL pode ser encontrada [AQUI](https://pastebin.pl/view/f741ab29).
 
 ## Observações
