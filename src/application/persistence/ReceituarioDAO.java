@@ -33,7 +33,7 @@ public class ReceituarioDAO implements IReceituarioDAO {
 
 	@Override
 	public void atualizaReceituario(Receituario re) throws SQLException {
-		String sql = "UPDATE receita SET idConsulta = ?, prescricao = ? WHERE id = ?";
+		String sql = "UPDATE receita SET consultaID = ?, prescricao = ? WHERE id = ?";
 
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setInt(1, re.getConsultaId().getId());
@@ -56,20 +56,20 @@ public class ReceituarioDAO implements IReceituarioDAO {
 	@Override
 	public Receituario buscaReceituario(Receituario re) throws SQLException {
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT re.id AS idReceituario, re.prescricao AS prescricaoReceituario, ");
-		sql.append("co.id AS idConsulta, co.paciente AS pacienteConsulta, co.medico AS medicoConsulta, co.clinica AS clinicaConsulta, co.data AS dataConsulta, co.hora AS horaConsulta, co.observacao ");
-		sql.append("FROM receituario re INNER JOIN consulta co ");
-		sql.append("ON re.idConsulta = co.id ");
-		sql.append("WHERE re.id = ?");
+		sql.append("SELECT r.id, c.id AS Consulta, r.prescricao AS Prescricao ");
+		sql.append("FROM receituario r, consulta c ");
+		sql.append("WHERE r.id = ?");
+		sql.append("AND r.consultaID = c.id ");
+
 		PreparedStatement ps = c.prepareStatement(sql.toString());
 		ps.setInt(1, re.getId());
 		ResultSet rs = ps.executeQuery();
 		int cont = 0;
 		if (rs.next()) {
 			Consulta co = new Consulta();
-			co.setId(rs.getInt("idConsulta"));
+			co.setId(rs.getInt("Consulta"));
 			
-			re.setPrescricao(rs.getString("prescricaoReceituario"));
+			re.setPrescricao(rs.getString("Prescricao"));
 			re.setConsultaId(co);
 			cont++;
 			}
@@ -88,21 +88,21 @@ public class ReceituarioDAO implements IReceituarioDAO {
 	public List<Receituario> buscaReceituarios() throws SQLException {
 		List<Receituario> listaReceituarios = new ArrayList<Receituario>();
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT re.id AS idReceituario, re.prescricao AS prescricaoReceituario, ");
-		sql.append("co.id AS idConsulta, co.paciente AS pacienteConsulta, co.medico AS medicoConsulta, co.clinica AS clinicaConsulta, co.data AS dataConsulta, co.hora AS horaConsulta, co.observacao ");
-		sql.append("FROM receituario re INNER JOIN consulta co ");
-		sql.append("ON re.idConsulta = co.id");
+		sql.append("SELECT r.id, c.id AS Consulta, r.prescricao AS Prescricao ");
+		sql.append("FROM receituario r, consulta c ");
+		sql.append("WHERE r.consultaID = c.id");
+
 		PreparedStatement ps = c.prepareStatement(sql.toString());
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
 			Consulta co = new Consulta();
-			co.setId(rs.getInt("idConsulta"));
+			co.setId(rs.getInt("Consulta"));
 			
 			
 			Receituario re = new Receituario();
-			re.setId(rs.getInt("idReceituario"));		
+			re.setId(rs.getInt("id"));		
 			re.setConsultaId(co);
-			re.setPrescricao(rs.getString("prescricaoReceituario"));
+			re.setPrescricao(rs.getString("Prescricao"));
 		
 			listaReceituarios.add(re);
 		}

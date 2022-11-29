@@ -5,6 +5,7 @@ import java.util.List;
 
 import application.model.Medico;
 import application.persistence.MedicoDAO;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
@@ -18,12 +19,13 @@ public class MedicoController implements IMedicoController{
 	private TextField tfComplMedico;
     private TextField tfTelMedico;
     private TextField tfEmailMedico;
-    private TextField tfEspecialidadeMedico;
+    private TextField tfIdEspecialidadeMedico;
+    private Label lblEspecialidade;
     private TextArea taListarMedicos;
     
     public MedicoController(TextField tfCrm, TextField tfNomeMedico, TextField tfLogradouroMedico,
 			TextField tfNumMedico, TextField tfCepMedico, TextField tfComplMedico, TextField tfTelMedico,
-			TextField tfEmailMedico, TextField tfEspecialidadeMedico, TextArea taListarMedicos) {
+			TextField tfEmailMedico, TextField tfIdEspecialidadeMedico, Label lblEspecialidade, TextArea taListarMedicos) {
 		this.tfCrm = tfCrm;
 		this.tfNomeMedico = tfNomeMedico;
 		this.tfLogradouroMedico = tfLogradouroMedico;
@@ -32,7 +34,8 @@ public class MedicoController implements IMedicoController{
 		this.tfComplMedico = tfComplMedico;
 		this.tfTelMedico = tfTelMedico;
 		this.tfEmailMedico = tfEmailMedico;
-        this.tfEspecialidadeMedico = tfEspecialidadeMedico;
+        this.tfIdEspecialidadeMedico = tfIdEspecialidadeMedico;
+        this.lblEspecialidade = lblEspecialidade; 
 		this.taListarMedicos = taListarMedicos;
 	}
 
@@ -75,6 +78,8 @@ public class MedicoController implements IMedicoController{
         tfComplMedico.setText(m.getComplemento());
         tfTelMedico.setText(m.getTelefone());
         tfEmailMedico.setText(m.getEmail());
+        tfIdEspecialidadeMedico.setText(Integer.toString(m.getEspecialidade().getId()));
+        lblEspecialidade.setText(m.getEspecialidade().getNomeEspecialidade());
 	}
 
 	@Override
@@ -83,12 +88,12 @@ public class MedicoController implements IMedicoController{
 		taListarMedicos.setText("");
 		
 		MedicoDAO mDao = new MedicoDAO();
-				List<Medico> listaMedicos = mDao.listaMedico();
+		List<Medico> listaMedicos = mDao.listaMedico();
 
-        StringBuffer buffer = new StringBuffer("CPF\t\t\tNome\t\t\tLogradouro\t\t\tnumero\t\t\tCEP\t\t\tComplemento\t\t\ttipo Sanguineo\t\t\temail\n");
+        StringBuffer buffer = new StringBuffer("CRM\t\t\t\tNome\t\t\t\t\tLogradouro\t\t\tnumero\t\t\tCEP\t\t\tComplemento\t\t\tTelefone\t\t\tEmail\t\t\t\t\t\tEspecialidade\n");
 
         for(Medico m : listaMedicos){
-            buffer.append(m.getCrm()+"\t\t\t"+m.getNome()+"\t\t\t"+m.getLogradouro()+"\t\t\t"+m.getNumEnd()+"\t\t\t"+m.getCep()+"\t\t\t"+m.getComplemento()+"\t\t\t"+m.getEmail()+"\n");
+            buffer.append(m.getCrm()+"\t\t"+m.getNome()+"\t\t\t\t"+m.getLogradouro()+"\t\t\t"+m.getNumEnd()+"\t\t\t"+m.getCep()+"\t\t\t"+m.getComplemento()+"\t\t\t"+m.getTelefone()+"\t\t\t"+m.getEmail()+"\t\t\t\t\t"+m.getEspecialidade()+"\n");
         }
         taListarMedicos.setText(buffer.toString());
 	}
@@ -102,6 +107,8 @@ public class MedicoController implements IMedicoController{
     	tfComplMedico.setText("");
         tfTelMedico.setText("");
         tfEmailMedico.setText("");
+        tfIdEspecialidadeMedico.setText("");
+        lblEspecialidade.setText("");
     }
 	
 	

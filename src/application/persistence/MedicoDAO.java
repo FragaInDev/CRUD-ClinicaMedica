@@ -29,7 +29,7 @@ public class MedicoDAO implements IMedicoDAO{
         ps.setString(6, m.getComplemento());
         ps.setString(7, m.getTelefone());
         ps.setString(8, m.getEmail());
-        ps.setObject(9, m.getEspecialidade());
+        ps.setInt(9, m.getEspecialidade().getId());
         ps.execute();
         ps.close();
     }
@@ -37,7 +37,7 @@ public class MedicoDAO implements IMedicoDAO{
     @Override
     public void atualizaMedico(Medico m) throws SQLException {
     	
-    	String sql = "UPDATE medico set nome = ?, logradouro = ?, numero = ?, cep = ?, complemento = ?, telefone = ?, email = ? WHERE crm = ?";
+    	String sql = "UPDATE medico set nome = ?, logradouro = ?, numero = ?, cep = ?, complemento = ?, telefone = ?, email = ?, especialidadeID= ? WHERE crm = ?";
         PreparedStatement ps = c.prepareStatement(sql);
         ps.setString(1, m.getNome());
         ps.setString(2, m.getLogradouro());
@@ -46,7 +46,8 @@ public class MedicoDAO implements IMedicoDAO{
         ps.setString(5, m.getComplemento());
         ps.setString(6, m.getTelefone());
         ps.setString(7, m.getEmail());
-        ps.setString(8, m.getCrm());
+        ps.setInt(8, m.getEspecialidade().getId());
+        ps.setString(9, m.getCrm());
         ps.execute();
         ps.close();
     }
@@ -62,12 +63,23 @@ public class MedicoDAO implements IMedicoDAO{
 
     @Override
     public Medico consultaMedico(Medico m) throws SQLException {
-    	String sql = "SELECT crm, nome, logradouro, numero, cep, complemento, telefone, email FROM medico WHERE crm = ?";
-        PreparedStatement ps = c.prepareStatement(sql);
+    	StringBuffer sql = new StringBuffer();
+        sql.append("SELECT m.crm AS CRM, m.nome, m.logradouro, m.numero, m.cep, m.complemento, m.telefone, m.email, ");
+        sql.append("e.id AS ID_Especialidade, e.especialidade AS Especialidade ");
+        sql.append("FROM medico m, especialidade e ");
+        sql.append("WHERE m.crm= ? AND especialidadeID = e.id");
+
+        PreparedStatement ps = c.prepareStatement(sql.toString());
         ps.setString(1, m.getCrm());
+
         int cont = 0;
         ResultSet rs = ps.executeQuery();
         if(rs.next()){
+            Especialidade e =  new Especialidade();
+            e.setId(rs.getInt("ID_Especialidade"));
+            e.setNomeEspecialidade(rs.getString("Especialidade"));
+
+            m.setCrm(rs.getString("CRM"));
             m.setNome(rs.getString("nome"));
             m.setLogradouro(rs.getString("logradouro"));
             m.setNumEnd(rs.getString("numero"));
@@ -79,6 +91,8 @@ public class MedicoDAO implements IMedicoDAO{
         }
         if (cont == 0){
             m = new Medico();
+            Especialidade e = new Especialidade();
+            m.setEspecialidade(e);
         }
         rs.close();
         ps.close();
@@ -87,11 +101,21 @@ public class MedicoDAO implements IMedicoDAO{
 
     @Override
     public List<Medico> listaMedico() throws SQLException {
-    	String sql = "SELECT crm, nome, logradouro, numero, cep, complemento, telefone, email FROM medico";
-        PreparedStatement ps = c.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
         List<Medico> listaMedico = new ArrayList<Medico>();
+
+    	StringBuffer sql = new StringBuffer();
+        sql.append("SELECT m.crm AS CRM, m.nome, m.logradouro, m.numero, m.cep, m.complemento, m.telefone, m.email, ");
+        sql.append("e.id AS ID_Especialidade, e.especialidade AS Especialidade ");
+        sql.append("FROM medico m, especialidade e ");
+        sql.append("WHERE especialidadeID = e.id");
+
+        PreparedStatement ps = c.prepareStatement(sql.toString());
+        ResultSet rs = ps.executeQuery();
         while(rs.next()){
+            Especialidade e =  new Especialidade();
+            e.setId(rs.getInt("ID_Especialidade"));
+            e.setNomeEspecialidade(rs.getString("Especialidade"));
+
             Medico m = new Medico();
             m.setCrm(rs.getString("crm"));
             m.setNome(rs.getString("nome"));
@@ -101,6 +125,7 @@ public class MedicoDAO implements IMedicoDAO{
             m.setComplemento(rs.getString("complemento"));
             m.setTelefone(rs.getString("telefone"));
             m.setEmail(rs.getString("email"));
+            m.setEspecialidade(e);
             listaMedico.add(m);
         }
         rs.close();

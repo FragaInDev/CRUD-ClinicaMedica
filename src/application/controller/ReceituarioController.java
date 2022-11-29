@@ -10,16 +10,16 @@ import javafx.scene.control.TextField;
 
 public class ReceituarioController implements IReceituarioController {
 
-	private TextField txtIdReceituario;
-	private TextField txtIdConsultaReceituario;
-	private TextField txtPrescricaoReceituario;
+	private TextField tfIdReceituario;
+	private TextField tfIdConsultaReceituario;
+	private TextField tfPrescricao;
 	private TextArea taListarReceituarios;
 
-	public ReceituarioController(TextField txtIdReceituario, TextField txtIdConsultaReceituario,
-			TextField txtPrescricaoReceituario, TextArea taListarReceituarios) {
-		this.txtIdReceituario = txtIdReceituario;
-		this.txtIdConsultaReceituario = txtIdConsultaReceituario;
-		this.txtPrescricaoReceituario = txtPrescricaoReceituario;
+	public ReceituarioController(TextField tfIdReceituario, TextField tfIdConsultaReceituario,
+			TextField tfPrescricao, TextArea taListarReceituarios) {
+		this.tfIdReceituario = tfIdReceituario;
+		this.tfIdConsultaReceituario = tfIdConsultaReceituario;
+		this.tfPrescricao = tfPrescricao;
 		this.taListarReceituarios = taListarReceituarios;
 	}
 
@@ -52,9 +52,9 @@ public class ReceituarioController implements IReceituarioController {
 		limparCamposReceituario();
 		ReceituarioDAO receitaDao = new ReceituarioDAO();
 		re = receitaDao.buscaReceituario(re);
-		txtIdReceituario.setText(String.valueOf(re.getId()));
-		txtIdConsultaReceituario.setText(String.valueOf(re.getConsultaId().getId()));
-		txtPrescricaoReceituario.setText(re.getPrescricao());
+		tfIdReceituario.setText(String.valueOf(re.getId()));
+		tfIdConsultaReceituario.setText(String.valueOf(re.getConsultaId().getId()));
+		tfPrescricao.setText(re.getPrescricao());
 	}
 
 	@Override
@@ -74,9 +74,9 @@ public class ReceituarioController implements IReceituarioController {
 	}
 
 	private void limparCamposReceituario() {
-		txtIdReceituario.setText("");
-		txtIdConsultaReceituario.setText("");
-		txtPrescricaoReceituario.setText("");
+		tfIdReceituario.setText("");
+		tfIdConsultaReceituario.setText("");
+		tfPrescricao.setText("");
 
 	}
 

@@ -70,7 +70,8 @@
                   <Button fx:id="btnExcluirMedico" layoutX="672.0" layoutY="246.0" mnemonicParsing="false" onAction="#acaoMedico" text="Excluir" />
                   <Button fx:id="btnListarMedico" layoutX="734.0" layoutY="246.0" mnemonicParsing="false" onAction="#acaoMedico" text="Listar" />
                   <TextField fx:id="tfNumMedico" layoutX="520.0" layoutY="169.0" prefHeight="25.0" prefWidth="74.0" promptText="Número" />
-                  <TextField fx:id="tfEspecialidadeMedico" layoutX="528.0" layoutY="27.0" prefHeight="25.0" prefWidth="245.0" />
+                  <TextField fx:id="tfIdEspecialidadeMedico" layoutX="308.0" layoutY="27.0" prefHeight="25.0" prefWidth="164.0" promptText="Digite o ID da Especialidade" />
+                  <Label fx:id="lblEspecialidade" layoutX="477.0" layoutY="27.0" prefHeight="24.0" prefWidth="295.0" text="Nome da Especialidade" />
                </children>
             </AnchorPane>
          </content></Tab>
@@ -133,7 +134,7 @@
                   <Button fx:id="btnBuscarConsulta" layoutX="185.0" layoutY="27.0" mnemonicParsing="false" onAction="#acaoConsulta" text="Buscar" />
                   <TextField fx:id="tfPacienteConsulta" layoutX="25.0" layoutY="73.0" promptText="Digite o CPF do paciente" />
                   <TextField fx:id="tfMedicoConsulta" layoutX="185.0" layoutY="73.0" promptText="Digite o CRM do médico" />
-                  <TextField fx:id="tfClinicaConsulta" layoutX="346.0" layoutY="73.0" prefHeight="25.0" prefWidth="191.0" promptText="Digite o CNPJ da clínica" />
+                  <TextField fx:id="tfClinicaConsulta" layoutX="346.0" layoutY="73.0" prefHeight="25.0" prefWidth="191.0" promptText="Digite o ID da clínica" />
                   <TextField fx:id="tfDataConsulta" layoutX="587.0" layoutY="73.0" prefHeight="25.0" prefWidth="89.0" promptText="Digite a data" />
                   <TextField fx:id="tfObserConsulta" layoutX="25.0" layoutY="120.0" prefHeight="25.0" prefWidth="742.0" promptText="Digite uma observação" />
                   <ScrollPane layoutX="25.0" layoutY="228.0">
@@ -160,7 +161,7 @@
                   <TextField fx:id="tfPrescricao" layoutX="26.0" layoutY="112.0" prefHeight="25.0" prefWidth="745.0" promptText="Prescrição" />
                   <ScrollPane layoutX="26.0" layoutY="194.0">
                      <content>
-                        <TextArea prefHeight="351.0" prefWidth="744.0" />
+                        <TextArea fx:id="taListarReceituarios" prefHeight="351.0" prefWidth="744.0" />
                      </content>
                   </ScrollPane>
                   <Button fx:id="btnInserirReceituario" layoutX="537.0" layoutY="163.0" mnemonicParsing="false" onAction="#acaoReceituario" text="Inserir" />

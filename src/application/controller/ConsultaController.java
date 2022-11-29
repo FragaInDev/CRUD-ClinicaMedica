@@ -10,26 +10,26 @@ import javafx.scene.control.TextField;
 
 public class ConsultaController implements IConsultaController {
 
-	private TextField txtIdConsulta;
-	private TextField txtCpfPacienteConsulta;
-	private TextField txtCrmMedicoConsulta;
-	private TextField txtIdClinicaConsulta;
-	private TextField txtDataConsulta;
-	private TextField txtHoraConsulta;
-	private TextField txtObservacaoConsulta;
-	private TextArea taListarConsultas;
+	private TextField tfIdConsulta;
+	private TextField tfPacienteConsulta;
+	private TextField tfMedicoConsulta;
+	private TextField tfClinicaConsulta;
+	private TextField tfDataConsulta;
+	private TextField tfHoraConsulta;
+	private TextField tfObserConsulta;
+	private TextArea taListaConsulta;
 
-	public ConsultaController(TextField txtIdConsulta, TextField txtCpfPacienteConsulta, TextField txtCrmMedicoConsulta,
-			TextField txtIdClinicaConsulta, TextField txtDataConsulta, TextField txtHoraConsulta,
-			TextField txtObservacaoConsulta, TextArea taListarConsultas) {
-		this.txtIdConsulta = txtIdConsulta;
-		this.txtCpfPacienteConsulta = txtCpfPacienteConsulta;
-		this.txtCrmMedicoConsulta = txtCrmMedicoConsulta;
-		this.txtIdClinicaConsulta = txtIdClinicaConsulta;
-		this.txtDataConsulta = txtDataConsulta;
-		this.txtHoraConsulta = txtHoraConsulta;
-		this.txtObservacaoConsulta = txtObservacaoConsulta;
-		this.taListarConsultas = taListarConsultas;
+	public ConsultaController(TextField tfIdConsulta, TextField tfPacienteConsulta, TextField tfMedicoConsulta,
+			TextField tfClinicaConsulta, TextField tfDataConsulta, TextField tfHoraConsulta,
+			TextField tfObserConsulta, TextArea taListaConsulta) {
+		this.tfIdConsulta = tfIdConsulta;
+		this.tfPacienteConsulta = tfPacienteConsulta;
+		this.tfMedicoConsulta = tfMedicoConsulta;
+		this.tfClinicaConsulta = tfClinicaConsulta;
+		this.tfDataConsulta = tfDataConsulta;
+		this.tfHoraConsulta = tfHoraConsulta;
+		this.tfObserConsulta = tfObserConsulta;
+		this.taListaConsulta = taListaConsulta;
 	}
 
 	@Override
@@ -59,16 +59,17 @@ public class ConsultaController implements IConsultaController {
 	@Override
 	public void buscarConsulta(Consulta co) throws ClassNotFoundException, SQLException {
 		limparCamposConsulta();
+		
 		ConsultaDAO consultaDao = new ConsultaDAO();
-		co = consultaDao.buscaConsulta(co);
+		consultaDao.buscaConsulta(co);
 
-		txtIdConsulta.setText(String.valueOf(co.getId()));
-		txtCpfPacienteConsulta.setText(co.getPacienteCpf().getCpf());
-		txtCrmMedicoConsulta.setText(co.getMedicoCrm().getCrm());
-		txtIdClinicaConsulta.setText(String.valueOf(co.getClinicaId().getId()));
-		txtDataConsulta.setText(String.valueOf(co.getData()));
-		txtHoraConsulta.setText(String.valueOf(co.getHora()));
-		txtObservacaoConsulta.setText(co.getObservacao());
+		tfIdConsulta.setText(Integer.toString(co.getId()));
+		tfPacienteConsulta.setText(co.getPacienteCpf().getCpf());
+		tfMedicoConsulta.setText(co.getMedicoCrm().getCrm());
+		tfClinicaConsulta.setText(Integer.toString(co.getClinicaId().getId()));
+		tfDataConsulta.setText(co.getData());
+		tfHoraConsulta.setText(co.getHora());
+		tfObserConsulta.setText(co.getObservacao());
 	}
 
 	@Override
@@ -77,26 +78,26 @@ public class ConsultaController implements IConsultaController {
 		ConsultaDAO consultaDao = new ConsultaDAO();
 		List<Consulta> listaConsultas = consultaDao.buscaConsultas();
 
-		taListarConsultas.setText("");
+		taListaConsulta.setText("");
 
 		StringBuffer sb = new StringBuffer(
 				"Id\t\t\t\tPaciente\t\t\t\tMédico\t\t\t\tClínica\t\t\t\tData\t\t\t\tHora\t\t\t\tObservação\n");
 		for (Consulta co : listaConsultas) {
-			sb.append(co.getId() + "\t\t\t\t" + co.getPacienteCpf() + "\t\t\t\t" + co.getMedicoCrm() + "\t\t\t\t"
-					+ co.getClinicaId() + "\t\t\t\t" + co.getData() + "\t\t\t\t" + co.getHora() + "\t\t\t\t"
+			sb.append(co.getId() + "\t\t\t\t" + co.getPacienteCpf().getCpf() + "\t\t\t" + co.getMedicoCrm().getCrm() + "\t\t\t\t"
+					+ co.getClinicaId().getId() + "\t\t\t\t\t" + co.getData() + "\t\t" + co.getHora() + "\t\t\t\t"
 					+ co.getObservacao() + "\n");
 		}
-		taListarConsultas.setText(sb.toString());
+		taListaConsulta.setText(sb.toString());
 	}
 
 	private void limparCamposConsulta() {
-		txtIdConsulta.setText("");
-		txtCpfPacienteConsulta.setText("");
-		txtCrmMedicoConsulta.setText("");
-		txtIdClinicaConsulta.setText("");
-		txtDataConsulta.setText("");
-		txtHoraConsulta.setText("");
-		txtObservacaoConsulta.setText("");
+		tfIdConsulta.setText("");
+		tfPacienteConsulta.setText("");
+		tfMedicoConsulta.setText("");
+		tfClinicaConsulta.setText("");
+		tfDataConsulta.setText("");
+		tfHoraConsulta.setText("");
+		tfObserConsulta.setText("");
 	}
 
 }

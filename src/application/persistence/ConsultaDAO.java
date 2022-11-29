@@ -1,7 +1,6 @@
 package application.persistence;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,8 +30,8 @@ public class ConsultaDAO implements IConsultaDAO {
 		ps.setString(2, co.getPacienteCpf().getCpf());
 		ps.setString(3, co.getMedicoCrm().getCrm());
 		ps.setInt(4, co.getClinicaId().getId());
-		ps.setDate(5, (Date) co.getData());
-		ps.setTime(6, co.getHora());
+		ps.setString(5, co.getData());
+		ps.setString(6, co.getHora());
 		ps.setString(7, co.getObservacao());
 		ps.execute();
 		ps.close();
@@ -40,14 +39,14 @@ public class ConsultaDAO implements IConsultaDAO {
 
 	@Override
 	public void atualizaConsulta(Consulta co) throws SQLException {
-		String sql = "UPDATE consulta SET CpfPaciente = ?, crmMedico = ?, IdClinica = ?, data = ?, hora = ?, observacao = ? WHERE id = ?";
+		String sql = "UPDATE consulta SET pacienteCPF = ?, medicoCRM = ?, clinicaID = ?, dataConsulta = ?, horaConsulta = ?, observacao = ? WHERE id = ?";
 
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setString(1, co.getPacienteCpf().getCpf());
 		ps.setString(2, co.getMedicoCrm().getCrm());
 		ps.setInt(3, co.getClinicaId().getId());
-		ps.setDate(4, (Date) co.getData());
-		ps.setTime(5, co.getHora());
+		ps.setString(4, co.getData());
+		ps.setString(5, co.getHora());
 		ps.setString(6, co.getObservacao());
 		ps.setInt(7, co.getId());
 		ps.execute();
@@ -68,30 +67,32 @@ public class ConsultaDAO implements IConsultaDAO {
 	@Override
 	public Consulta buscaConsulta(Consulta co) throws SQLException {
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT co.id AS idConsulta, co.data AS dataConsulta, co.hora AS horaConsulta, co.observacao AS observacaoConsulta, ");
-		sql.append("pa.cpf AS cpfPaciente, me.crm AS crmMedico, cl.id AS idClinica ");
-		sql.append("FROM consulta co, paciente pa, medico me, clinica cl ");
-		sql.append ("WHERE co.idConsulta = pa.cpf ");
-		sql.append("AND co.idMedico = me.crm ");
-		sql.append("AND co.idClinica = cl.id ");
-		sql.append("AND WHERE co.id = ?");
+		sql.append("SELECT co.id, co.dataConsulta AS Data, co.horaConsulta AS Horario, co.observacao AS Observacao, ");
+		sql.append("p.cpf AS Paciente, m.crm AS Medico, cl.id AS Clinica ");
+		sql.append("FROM consulta co, paciente p, medico m, clinica cl ");
+		sql.append ("WHERE co.id = ? ");
+		sql.append ("AND co.pacienteCPF = p.cpf ");
+		sql.append("AND co.medicoCRM = m.crm ");
+		sql.append("AND co.clinicaID = cl.id");
+
 		PreparedStatement ps = c.prepareStatement(sql.toString());
 		ps.setInt(1, co.getId());
+
 		ResultSet rs = ps.executeQuery();
 		int cont = 0;
 		if (rs.next()) {
 			Paciente pa = new Paciente();
-			pa.setCpf(rs.getString("cpfPaciente"));
+			pa.setCpf(rs.getString("Paciente"));
 			
 			Medico me = new Medico();
-			me.setCrm(rs.getString("crmMedico"));;
+			me.setCrm(rs.getString("Medico"));;
 			
 			Clinica cl = new Clinica();
-			cl.setId(rs.getInt("clinicaId"));
+			cl.setId(rs.getInt("Clinica"));
 			
-			co.setData(rs.getDate("dataConsulta"));
-			co.setHora(rs.getTime("horaConsulta"));
-			co.setObservacao(rs.getString("observacaoConsulta"));
+			co.setData(rs.getString("Data"));
+			co.setHora(rs.getString("Horario"));
+			co.setObservacao(rs.getString("Observacao"));
 			cont++;
 		}
 		if (cont == 0) {
@@ -111,33 +112,35 @@ public class ConsultaDAO implements IConsultaDAO {
 	@Override
 	public List<Consulta> buscaConsultas() throws SQLException {
 		List<Consulta> listaConsultas = new ArrayList<Consulta>();
+
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT co.id AS idConsulta, co.data AS dataConsulta, co.hora AS horaConsulta, co.observacao AS observacaoConsulta, ");
-		sql.append("pa.cpf AS cpfPaciente, me.crm AS crmMedico, cl.id AS idClinica ");
-		sql.append("FROM consulta co, paciente pa, medico me, clinica cl ");
-		sql.append ("WHERE co.idConsulta = pa.cpf ");
-		sql.append("AND co.idMedico = me.crm ");
-		sql.append("AND co.idClinica = cl.id");
+		sql.append("SELECT co.id, co.dataConsulta AS Data, co.horaConsulta AS Horario, co.observacao AS Observacao, ");
+		sql.append("p.cpf AS Paciente, m.crm AS Medico, cl.id AS Clinica ");
+		sql.append("FROM consulta co, paciente p, medico m, clinica cl ");
+		sql.append ("WHERE co.pacienteCPF = p.cpf ");
+		sql.append("AND co.medicoCRM = m.crm ");
+		sql.append("AND co.clinicaID = cl.id");
+		
 		PreparedStatement ps = c.prepareStatement(sql.toString());
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
 			Paciente pa = new Paciente();
-			pa.setCpf(rs.getString("cpfPaciente"));
+			pa.setCpf(rs.getString("Paciente"));
 			
 			Medico me = new Medico();
-			me.setCrm(rs.getString("crmMedico"));;
+			me.setCrm(rs.getString("Medico"));;
 			
 			Clinica cl = new Clinica();
-			cl.setId(rs.getInt("clinicaId"));
+			cl.setId(rs.getInt("Clinica"));
 			
 			Consulta co = new Consulta();
-			co.setId(rs.getInt("idConsulta"));
+			co.setId(rs.getInt("id"));
 			co.setPacienteCpf(pa);
 			co.setMedicoCrm(me);
 			co.setClinicaId(cl);
-			co.setData(rs.getDate("dataConsulta"));
-			co.setHora(rs.getTime("horaConsulta"));
-			co.setObservacao(rs.getString("observacaoConsulta"));
+			co.setData(rs.getString("Data"));
+			co.setHora(rs.getString("Horario"));
+			co.setObservacao(rs.getString("Observacao"));
 
 			listaConsultas.add(co);
 		}

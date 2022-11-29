@@ -1,15 +1,12 @@
 package application.model;
 
-import java.sql.Date;
-import java.sql.Time;
-
 public class Consulta {
     private int id;
     private Paciente paciente;
     private Medico medico;
     private Clinica clinica;
-    private Date data;
-    private Time hora;
+    private String data;
+    private String hora;
     private String observacao;
 
     public int getId() {
@@ -36,16 +33,16 @@ public class Consulta {
     public void setClinicaId(Clinica clinica) {
         this.clinica = clinica;
     }
-    public Date getData() {
+    public String getData() {
         return data;
     }
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
-    public Time getHora() {
+    public String getHora() {
         return hora;
     }
-    public void setHora(Time hora) {
+    public void setHora(String hora) {
         this.hora = hora;
     }
     public String getObservacao() {
